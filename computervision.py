@@ -1,12 +1,11 @@
 #!/usr/bin/python3
-import cv2
-import math
-import tkinter
 import logging
+import math
+
+import cv2
+import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import gridspec
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
 
 logging.basicConfig(level=logging.DEBUG)
 
@@ -123,19 +122,36 @@ def gradient_magnitude(image, filter, direction):
     """
     if filter == "sobel":
         filter_m = {
-            "x": np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]], dtype=np.float64),
-            "y": np.array([[1, 0, -1], [2, 0, -2], [1, 0, -1]], dtype=np.float64)
+            "x": np.array([
+                [1, 2, 1],
+                [0, 0, 0],
+                [-1, -2, -1]],
+                dtype=np.float64),
+            "y": np.array([
+                [1, 0, -1],
+                [2, 0, -2],
+                [1, 0, -1]],
+                dtype=np.float64)
         }
     elif filter == "prewitt":
         filter_m = {
-            "x": np.array([[1, 1, 1], [0, 0, 0], [-1, -1, -1]], dtype=np.float64),
-            "y": np.array([[1, 0, -1], [1, 0, -1], [1, 0, -1]], dtype=np.float64)
+            "x": np.array([
+                [1, 1, 1],
+                [0, 0, 0],
+                [-1, -1, -1]],
+                dtype=np.float64),
+            "y": np.array([
+                [1, 0, -1],
+                [1, 0, -1],
+                [1, 0, -1]],
+                dtype=np.float64)
         }
     else:
         logging.error("Wrong filter name. Must bei either sobel or prewitt.")
 
     result = None
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    filter_m = None
     if direction == "horizontal":
         result = naive_convolve(gray, filter_m['x'])
     elif direction == "vertical":
@@ -156,7 +172,18 @@ def zero_crossings(image, size):
     Returns the edges at zero-crossings of the image. Uses the Laplacian operator of size 3x3, 5x5 or 17x17.
     :param size: Size of the Laplacian filter. Either 3, 5 or 17. 
     """
-    pass
+
+    def get_laplace(n):
+        mask = np.ones((n, n))
+        mask[n // 2, n // 2] = 1 - (n * n)
+        return mask
+
+    filter = get_laplace(size)
+    return {
+        "Zero Crossings, Size {}".format(size): naive_convolve(cv2.cvtColor(image, cv2.COLOR_BGR2GRAY), filter)
+    }
+
+
 
 
 def enhance_contrast(image, *args):
@@ -216,7 +243,15 @@ if __name__ == "__main__":
         show(res, 3, True)
 
 
+    def test_zero_crossings(image):
+        res = {}
+        for r in [3, 5, 17]:
+            res.update(zero_crossings(image, r))
+        show(res, 3, True)
+
+
     images = load_images()
-    test_gradient_magnitude(images['lena'])
+    test_zero_crossings(images['lena'])
+    # test_gradient_magnitude(images['lena'])
     #show_cv(hsv_split(images['lab1a']))
     #show(images)
