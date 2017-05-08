@@ -23,15 +23,8 @@ from scipy import spatial
 from scipy.io import loadmat
 from sklearn.datasets import *
 from util import log_progress
-
-# get_ipython().magic('matplotlib inline')
 pylab.rcParams['figure.figsize'] = 16, 12
 sys.setrecursionlimit(10000)
-
-# ##### Load  and visualize sample data
-# The matrix is loaded into a numpy array of dimensions (2000, 3)
-
-# In[333]:
 
 """
 https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/segbench/BSDS300/html/dataset/images/color/181091.html
@@ -43,11 +36,6 @@ img_path = Path('images')
 IMG_A = cv2.imread(str(img_path / "a.jpg"))
 IMG_B = cv2.imread(str(img_path / "b.jpg"))
 IMG_C = cv2.imread(str(img_path / "c.jpg"))
-
-# ##### Utility functions
-# 
-
-# In[334]:
 
 cached_tree = None
 
@@ -62,8 +50,6 @@ def get_neighbours_cdist(data, point, r):
     distances = spatial.distance.cdist(np.array([point]), data)[0]
     return data[np.where(distances < r)]
 
-
-# In[335]:
 
 def find_peak(data, point, r, t=0.01):
     def calc_new_shift(data, point, r):
@@ -92,20 +78,18 @@ def meanshift(data, r):
     return np.array(peaks), np.array(points), np.array(point_peaks)
 
 
-# In[336]:
-
 def find_peak_opt(data, point, r, c=4.0, t=0.01):
     def calc_new_shift(data, point, r):
         return data[get_neighbours(data, point, r)].mean(axis=0)
 
     dist = t
-    cpts = set()
+    cpts = []
     while dist >= t:
         peak = calc_new_shift(data, point, r)
         dist = spatial.distance.euclidean(peak, point)
-        cpts = cpts.union(get_neighbours(data, point, r / c))
+        cpts.extend(get_neighbours(data, point, r / c))
         point = peak
-    return peak, list(cpts)
+    return peak, list(set(cpts))
 
 
 def meanshift_opt(data, r):
@@ -131,8 +115,6 @@ def meanshift_opt(data, r):
     return np.array(peaks), point_peaks
 
 
-# In[337]:
-
 def image_segment(image, r, scale=0.5):
     # preprocess the image
     image = cv2.resize(image, None, fx=scale, fy=scale)
@@ -147,14 +129,8 @@ def image_segment(image, r, scale=0.5):
     converted_peaks = cv2.cvtColor(np.array([peaks[:, 0:3]], dtype=np.uint8), cv2.COLOR_LAB2BGR)[0]
     image = converted_peaks[point_peaks]
     image = image.reshape(*orig_image.shape)
-    plt.imshow(image)
-    plt.imshow(orig_image)
+    cv2.imwrite("out.jpg", image)
 
-
-# ##### Execute the meanshift function
-# Visualize the results
-
-# In[ ]:
 
 def visualize(image, r, func):
     peaks, _ = func(image, r)
@@ -165,7 +141,7 @@ def visualize(image, r, func):
     ax.scatter(*image.transpose(), c='blue', s=1)
 
 
-# In[ ]:
-
-# visualize(SAMPLE_DATA, r=5, func=meanshift_opt)
-image_segment(IMG_A, r=6)
+if __name__ == '__main__':
+    start = time.time()
+    image_segment(IMG_A, r=15)
+    print("Took {} s".format(time.time()-start))
