@@ -115,6 +115,7 @@ def image_segment(image, r, out="out", scale=1, c=4.0):
     image = converted_peaks[point_peaks]
     image = image.reshape(*orig_image.shape)
     cv2.imwrite(out + '.jpg', image)
+    return len(peaks)
 
 
 def visualize(image, r, func):
@@ -145,8 +146,18 @@ if __name__ == '__main__':
     parser.add_argument("scale", default=1, type=float, help="Rescaling factor.")
     parser.add_argument("r", default=10, type=float, help="The neighbourhood range to consider.")
     args = vars(parser.parse_args())
-    for c in range(2, 9, 2):
-        args['c'] = c
-        args['out'] = '{image}_c{c}_r{r}_s{scale}'.format(**args)
-        logging.info("Calculating meanshift for {}".format(args))
-        image_segment(**args)
+    import time
+    global_start = time.time()
+    peaks = {}
+    for c in range(1, 11, 1):
+        for r in range (5, 21, 5):
+            args['c'] = c
+            args['r'] = r
+            args['out'] = '{image}_c{c}_r{r}_s{scale}'.format(**args)
+            logging.info("Calculating meanshift for {}".format(args))
+            start = time.time()
+            peaks[args['out']]=image_segment(**args)
+            end = time.time()
+            logging.info("Finished in {} s".format(end-start))
+    logging.info("Processing all images took {} s".format(time.time()-global_start))
+    print(peaks)
