@@ -6,38 +6,23 @@
 
 # In[332]:
 
-import math
+import logging
 import sys
-import time
 from pathlib import Path
 
 import cv2
 import matplotlib.pylab as pylab
 import matplotlib.pyplot as plt
 import numpy as np
-import requests
-from IPython.core.display import clear_output
-from mpl_toolkits.mplot3d import Axes3D
-from progress.bar import Bar
 from scipy import spatial
 from scipy.io import loadmat
-from sklearn.datasets import *
-from util import log_progress
+from tqdm import tqdm
+
 pylab.rcParams['figure.figsize'] = 16, 12
 sys.setrecursionlimit(10000)
 
-"""
-https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/segbench/BSDS300/html/dataset/images/color/181091.html
-https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/segbench/BSDS300/html/dataset/images/color/55075.html
-https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/segbench/BSDS300/html/dataset/images/color/368078.html
-"""
-SAMPLE_DATA = loadmat("pts.mat")['data'].transpose()
-img_path = Path('images')
-IMG_A = cv2.imread(str(img_path / "a.jpg"))
-IMG_B = cv2.imread(str(img_path / "b.jpg"))
-IMG_C = cv2.imread(str(img_path / "c.jpg"))
-
 cached_tree = None
+logging.basicConfig(level=logging.INFO)
 
 
 def get_neighbours(data, point, r):
@@ -65,7 +50,7 @@ def find_peak(data, point, r, t=0.01):
 
 def meanshift(data, r):
     peaks, points, point_peaks = [], [], []
-    for point in log_progress(data, 1, len(data)):
+    for point in tqdm(data):
         peak = find_peak(data, point, r)
         # Match peak to possible neighbours. Use cdist because we have only few peaks
         neighbours = get_neighbours_cdist(np.array(peaks), peak, r / 2.) if len(peaks) > 0 else []
@@ -78,7 +63,7 @@ def meanshift(data, r):
     return np.array(peaks), np.array(points), np.array(point_peaks)
 
 
-def find_peak_opt(data, point, r, c=4.0, t=0.01):
+def find_peak_opt(data, point, r, c, t=0.01):
     def calc_new_shift(data, point, r):
         return data[get_neighbours(data, point, r)].mean(axis=0)
 
@@ -92,18 +77,18 @@ def find_peak_opt(data, point, r, c=4.0, t=0.01):
     return peak, list(set(cpts))
 
 
-def meanshift_opt(data, r):
+def meanshift_opt(data, r, c=4.0):
+    global cached_tree
+    cached_tree = None
     peaks, point_peaks = [], np.zeros(data.shape[0], dtype='int16') - 1
-    bar = Bar("Progress:", max=len(data))
-    for i, point in enumerate(data):
-        bar.next()
+    for i, point in enumerate(tqdm(data)):
         if point_peaks[i] != -1:
             continue
-        peak, cpts = find_peak_opt(data, point, r)
+        peak, cpts = find_peak_opt(data, point, r, c)
         # Match peak to possible neighbours. Use cdist because we have only few peaks
         peak_neighbours = get_neighbours_cdist(np.array(peaks), peak, r / 2.) if len(peaks) > 0 else []
         if len(peak_neighbours) > 1:
-            peak = data[neighbours][0]
+            peak = peak_neighbours[0]
         else:
             peaks.append(peak)
         # Basin of Attraction
@@ -111,25 +96,25 @@ def meanshift_opt(data, r):
         neighbours = get_neighbours(data, peak, r)
         point_peaks[neighbours] = peak_id
         point_peaks[cpts] = peak_id
-    bar.finish()
     return np.array(peaks), point_peaks
 
 
-def image_segment(image, r, scale=0.5):
+def image_segment(image, r, out="out", scale=1, c=4.0):
     # preprocess the image
+    image = cv2.imread(image)
     image = cv2.resize(image, None, fx=scale, fy=scale)
     orig_image = np.array(image)
     image = cv2.GaussianBlur(image, (5, 5), 5.0)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
     image = image.reshape(image.shape[0] * image.shape[1], image.shape[2])
-    print("Image has {} points".format(image.shape))
-    peaks, point_peaks = meanshift_opt(image, r)
+    # meanshift
+    peaks, point_peaks = meanshift_opt(image, r, c)
     print("Found {} peaks !".format(len(peaks)))
     # convert back to show format
     converted_peaks = cv2.cvtColor(np.array([peaks[:, 0:3]], dtype=np.uint8), cv2.COLOR_LAB2BGR)[0]
     image = converted_peaks[point_peaks]
     image = image.reshape(*orig_image.shape)
-    cv2.imwrite("out.jpg", image)
+    cv2.imwrite(out + '.jpg', image)
 
 
 def visualize(image, r, func):
@@ -140,8 +125,28 @@ def visualize(image, r, func):
     ax.scatter(*peaks.transpose(), c='black', s=100)
     ax.scatter(*image.transpose(), c='blue', s=1)
 
-
 if __name__ == '__main__':
-    start = time.time()
-    image_segment(IMG_A, r=15)
-    print("Took {} s".format(time.time()-start))
+
+    """
+    https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/segbench/BSDS300/html/dataset/images/color/181091.html
+    https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/segbench/BSDS300/html/dataset/images/color/55075.html
+    https://www2.eecs.berkeley.edu/Research/Projects/CS/vision/grouping/segbench/BSDS300/html/dataset/images/color/368078.html
+    """
+    SAMPLE_DATA = loadmat("pts.mat")['data'].transpose()
+    img_path = Path('images')
+    IMG_A = cv2.imread(str(img_path / "a.jpg"))
+    IMG_B = cv2.imread(str(img_path / "b.jpg"))
+    IMG_C = cv2.imread(str(img_path / "c.jpg"))
+
+    import argparse
+
+    parser = argparse.ArgumentParser(description="Executes meanshift.")
+    parser.add_argument("image", help="The RGB image to process.")
+    parser.add_argument("scale", default=1, type=float, help="Rescaling factor.")
+    parser.add_argument("r", default=10, type=float, help="The neighbourhood range to consider.")
+    args = vars(parser.parse_args())
+    for c in range(2, 9, 2):
+        args['c'] = c
+        args['out'] = '{image}_c{c}_r{r}_s{scale}'.format(**args)
+        logging.info("Calculating meanshift for {}".format(args))
+        image_segment(**args)
