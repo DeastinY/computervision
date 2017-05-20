@@ -172,7 +172,7 @@ def generate_report_images(image):
     for c in range(1, 11, 1):
         for r in range(5, 21, 5):
             for use_5d in [True, False]:
-                scale = 0.5
+                scale = 1
                 out = "{}_r{}_c{}_5d{}_scale{}.jpg".format(image.split('/')[-1][:-4], r, c, use_5d, scale)
                 logging.info(out)
                 start = time.time()
@@ -192,7 +192,7 @@ if __name__ == '__main__':
     parser.add_argument("-c", default=10, type=float, help="Optimization parameter for path collecting cpts.")
     parser.add_argument("-scale", default=1, type=float, help="Rescaling factor.")
     parser.add_argument("--use_5d", action='store_true', help="Use x and y position for meanshift.")
-    parser.add_argument("--report", action='store_true', help="Generates the images seen in the report, may take a very long time !")
+    parser.add_argument("--report", action='store_true', help="Generates the images seen in the report.May take a very long time !")
     args = vars(parser.parse_args())
 
 
