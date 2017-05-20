@@ -31,7 +31,7 @@ def plot(stats):
         sfilename, sr, sc, suse_5d, _ = imgname[:-4].split('_')
         r.append(int(sr[1:]))
         c.append(int(sc[1:]))
-        use_5d.append(bool(suse_5d[6:]))
+        use_5d.append(suse_5d[2:] == "True")
 
     df = pd.DataFrame({
         "peaks": peaks,
@@ -42,6 +42,7 @@ def plot(stats):
     })
     # Peaks per C for different r
     g = sns.factorplot(x="c", y="peaks", kind="swarm", hue="use_5d", col="r", data=df, legend_out=False)
+
     sns.plt.show()
     # Time for r/c
     g = sns.factorplot(x="c", y="time", hue="r", col="use_5d", data=df, legend_out=False)
