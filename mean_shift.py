@@ -1,28 +1,18 @@
-# coding: utf-8
+#!/usr/bin/python3
 
-# # Mean Shift
-# #### Basic Implementation
-# The following two functions find_peak and meanshift execute the basic mean shift algorithm.
-
-# In[332]:
-
+import json
 import logging
 import sys
 from pathlib import Path
-
+import time
 import cv2
-import matplotlib.pylab as pylab
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy import spatial
-from scipy.io import loadmat
 from tqdm import tqdm
 
-pylab.rcParams['figure.figsize'] = 16, 12
-sys.setrecursionlimit(10000)
-
-cached_tree = None
 logging.basicConfig(level=logging.INFO)
+sys.setrecursionlimit(10000)
+cached_tree = None
 
 
 def get_neighbours(data, point, r):
@@ -40,7 +30,7 @@ def find_peak(data, point, r, t=0.01):
     def calc_new_shift(data, point, r):
         return data[get_neighbours(data, point, r)].mean(axis=0)
 
-    dist = t
+    peak, dist = None, t
     while dist >= t:
         peak = calc_new_shift(data, point, r)
         dist = spatial.distance.euclidean(peak, point)
@@ -67,8 +57,7 @@ def find_peak_opt(data, point, r, c, t=0.01):
     def calc_new_shift(data, point, r):
         return data[get_neighbours(data, point, r)].mean(axis=0)
 
-    dist = t
-    cpts = []
+    dist, cpts, peak = t, [], None
     while dist >= t:
         peak = calc_new_shift(data, point, r)
         dist = spatial.distance.euclidean(peak, point)
