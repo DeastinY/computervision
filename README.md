@@ -5,9 +5,9 @@ This repository contains different CV algorithms in Python
 ![Header Image](report/header_1.jpeg)
 
 ## Setup
-I recommend creating a virtualenv and setting up the requirements using python 3.6.1  
-For OpenCV you can follow [this tutorial](http://cyaninfinite.com/tutorials/installing-opencv-in-ubuntu-for-python-3/).  
-If you have issues with gcc 6 you can use e.g. sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 1 to prefer gcc 5 for the installation.  
+I recommend creating a **virtualenv** and setting up the requirements using **Python 3.6.1**  
+For **OpenCV** you can follow [this tutorial](http://cyaninfinite.com/tutorials/installing-opencv-in-ubuntu-for-python-3/).  
+*If you have issues with gcc 6 you can use e.g. `sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 1` to prefer gcc 5 for the installation.*
 
 ## What is this ?
   - `computervision.py`: Different small functions for color splits, binary conversion, edge detection, ...
