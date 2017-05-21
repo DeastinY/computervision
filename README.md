@@ -1,11 +1,19 @@
+[![Python](https://img.shields.io/badge/Python-3.6-green.svg)]() [![DUB](https://img.shields.io/dub/l/vibe-d.svg?style=flat-square)]()
 # Computer Vision
-This repository groups different CV implementations for Python
+This repository contains different CV algorithms in Python
+
+![Header Image](report/header_1.jpeg)
 
 ## Setup
-I recommend creating a virtualenv and setting up the requirements using python 3.5.3.
-For OpenCV you can follow [this tutorial](http://cyaninfinite.com/tutorials/installing-opencv-in-ubuntu-for-python-3/).
-If you have issues with gcc 6 you can use e.g. sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 1 to prefer gcc 5 for the installation.
+I recommend creating a virtualenv and setting up the requirements using python 3.6.1  
+For OpenCV you can follow [this tutorial](http://cyaninfinite.com/tutorials/installing-opencv-in-ubuntu-for-python-3/).  
+If you have issues with gcc 6 you can use e.g. sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 1 to prefer gcc 5 for the installation.  
 
-For jupyter also install ipywidgets and enable it using
-
-jupyter nbextension enable --py widgetsnbextension
+## What is this ?
+  - `computervision.py`: Different small functions for color splits, binary conversion, edge detection, ...
+  - `mean_shift.py`: Implementation of the mean-shift algorithm. [Report](https://docs.google.com/document/d/14Db6y4Svfljd8qHcTz2Z5DY7x0skYbF07nH6m83NyfM/edit?usp=sharing)
+  - `visualize.py`: Generate plots for the code. Currently only visualizations for mean-shift are implemented.
+  
+## Collaboration
+You are very welcome to contribute and help in many different ways ! These could include, but are not limited to:  
+*writing documentation, adding examples, adding results, starting discussions, writing tutorials, providing feedback, ...*
