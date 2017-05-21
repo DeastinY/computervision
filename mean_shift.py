@@ -131,7 +131,7 @@ def meanshift_opt(data, r, c=4.0):
     return np.array(peaks), point_peaks
 
 
-def image_segment(image, r, use_5d=False, scale=1.0, c=4.0):
+def image_segment(image, r, use_5d=False, scale=1.0, c=4.0, report=None):
     """
     Preprocesses the image and executes meanshift.
     :param image: The path to the image to work on.
@@ -139,6 +139,7 @@ def image_segment(image, r, use_5d=False, scale=1.0, c=4.0):
     :param use_5d: Add spatial features (x,y) to the LBA color features. 
     :param scale: Scale the input image to adjust runtime.
     :param c: r/c points on the 'way to the peak' are collected and added to the same peak.
+    :param report: catching this allows the use of **args to call this function
     :return: How many peaks are found and an image with colors changed to the peak colors.
     """
     # Load image
@@ -179,7 +180,9 @@ def generate_report_images(image):
                 peaks, out_image = image_segment(image, r, use_5d=use_5d, scale=scale, c=c)
                 stats[out] = (peaks, time.time() - start)
                 cv2.imwrite(str(img_path / out), out_image)
-    (img_path / "stats.json").write_text(json.dumps(stats))
+    outname = "stats_{}_scale{}.json".format(out[0], scale)
+    logging.info("Writing results to {}".format(outname))
+    (img_path / outname).write_text(json.dumps(stats))
     return stats
 
 
