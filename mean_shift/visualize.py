@@ -1,9 +1,7 @@
 import json
 import logging
-from collections import defaultdict
 from pathlib import Path
 import pandas as pd
-import numpy as np
 import seaborn as sns
 sns.set(color_codes=True)
 
@@ -53,7 +51,8 @@ def preprocess(name, stats_data):
 
 def plot_all(stats, *, save=False):
     """
-    Plots stats for all passed stats files.
+    Plots stats for all passed stats files. 
+    There are no really usefull plots here, as I could not figure out any sensible metric :) 
     :param stats:  A dict containing "name": JSON mappings for *multiple* stats files.
     :param save: Set to True to not show, but save the plots to report/stats/.
     """
@@ -65,7 +64,7 @@ def plot_all(stats, *, save=False):
     ]
     for plt, suffix in plots:
         if save:
-            plt.savefig(str(DIR_OUTPUT / "{}_{}.jpg".format(name, suffix)))
+            plt.savefig(str(DIR_OUTPUT / "{}_{}.png".format(name, suffix)))
         else:
             sns.plt.show()
 
@@ -84,7 +83,7 @@ def plot(name, stats, *, save=False):
     ]
     for plt, suffix in plots:
         if save:
-            plt.savefig(str(DIR_OUTPUT / "{}_{}.jpg".format(name, suffix)))
+            plt.savefig(str(DIR_OUTPUT / "{}_{}.png".format(name, suffix)))
         else:
             sns.plt.show()
 
@@ -117,6 +116,5 @@ def plt_time(df, name):
 
 if __name__ == '__main__':
     all_stats = read_stats()
-    plot_all(all_stats)
     for n, s in all_stats.items():
         plot(n, s, save=True)
