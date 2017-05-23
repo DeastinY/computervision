@@ -9,7 +9,7 @@ if "%SPHINXBUILD%" == "" (
 )
 set SOURCEDIR=.
 set BUILDDIR=_build
-set SPHINXPROJ=mean_shift
+set SPHINXPROJ=computervision
 
 if "%1" == "" goto help
 
