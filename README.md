@@ -1,6 +1,7 @@
-[![Python](https://img.shields.io/badge/Python-3.6-green.svg)]() [![DUB](https://img.shields.io/dub/l/vibe-d.svg?style=flat-square)]()
+[![Python](https://img.shields.io/badge/Python-3.6-green.svg)]()
 # Computer Vision
 This repository contains different CV algorithms in Python
+Documentation can be found [here](http://computervision.readthedocs.io/en/latest/).
 
 ![Header Image](mean_shift/report/header_1.jpeg)
 
