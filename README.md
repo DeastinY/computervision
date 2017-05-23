@@ -1,7 +1,7 @@
 [![Python](https://img.shields.io/badge/Python-3.6-green.svg)]()
 # Computer Vision
-This repository contains different CV algorithms in Python
-Documentation can be found [here](http://computervision.readthedocs.io/en/latest/).
+This repository contains different CV algorithms in Python.  
+Documentation can be found [here](http://computervision.readthedocs.io/en/latest/).  
 
 ![Header Image](mean_shift/report/header_1.jpeg)
 
