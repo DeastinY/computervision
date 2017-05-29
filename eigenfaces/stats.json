@@ -1,47 +1,302 @@
 [
-  {
-    "train": 3,
-    "k": 10,
-    "accuracy": 0.675
-  },
-  {
-    "train": 3,
-    "k": 20,
-    "accuracy":  0.7392857142857143
-  },
-  {
-    "train": 3,
-    "k": 30,
-    "accuracy":  0.7678571428571429
-  },
-  {
-    "train": 5,
-    "k": 10,
-    "accuracy":  0.825
-  },
-  {
-    "train": 5,
-    "k": 20,
-    "accuracy":  0.875
-  },
-  {
-    "train": 5,
-    "k": 30,
-    "accuracy":  0.895
-  },
-  {
-    "train": 7,
-    "k": 10,
-    "accuracy":  0.8
-  },
-  {
-    "train": 7,
-    "k": 20,
-    "accuracy":  0.85
-  },
-  {
-    "train": 7,
-    "k": 30,
-    "accuracy":  0.866666
-  },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 10,
+        "accuracy": 0.675
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 15,
+        "accuracy": 0.7035714285714286
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 20,
+        "accuracy": 0.7392857142857143
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 25,
+        "accuracy": 0.7535714285714286
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 30,
+        "accuracy": 0.7678571428571429
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 35,
+        "accuracy": 0.7607142857142857
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 40,
+        "accuracy": 0.7678571428571429
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 45,
+        "accuracy": 0.7571428571428571
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 50,
+        "accuracy": 0.7607142857142857
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 55,
+        "accuracy": 0.7714285714285715
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 60,
+        "accuracy": 0.7642857142857142
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 65,
+        "accuracy": 0.7714285714285715
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 70,
+        "accuracy": 0.7714285714285715
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 75,
+        "accuracy": 0.7678571428571429
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 80,
+        "accuracy": 0.7714285714285715
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 85,
+        "accuracy": 0.7678571428571429
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 90,
+        "accuracy": 0.7785714285714286
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 95,
+        "accuracy": 0.7785714285714286
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 100,
+        "accuracy": 0.7785714285714286
+    },
+    {
+        "train": "images/3Train/3.mat",
+        "k": 105,
+        "accuracy": 0.7821428571428571
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 10,
+        "accuracy": 0.825
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 15,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 20,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 25,
+        "accuracy": 0.885
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 30,
+        "accuracy": 0.895
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 35,
+        "accuracy": 0.895
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 40,
+        "accuracy": 0.895
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 45,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 50,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 55,
+        "accuracy": 0.895
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 60,
+        "accuracy": 0.885
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 65,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 70,
+        "accuracy": 0.895
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 75,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 80,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 85,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 90,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 95,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 100,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/5Train/5.mat",
+        "k": 105,
+        "accuracy": 0.89
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 10,
+        "accuracy": 0.8
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 15,
+        "accuracy": 0.8333333333333334
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 20,
+        "accuracy": 0.85
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 25,
+        "accuracy": 0.8583333333333333
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 30,
+        "accuracy": 0.8666666666666667
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 35,
+        "accuracy": 0.8666666666666667
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 40,
+        "accuracy": 0.8666666666666667
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 45,
+        "accuracy": 0.8833333333333333
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 50,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 55,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 60,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 65,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 70,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 75,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 80,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 85,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 90,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 95,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 100,
+        "accuracy": 0.875
+    },
+    {
+        "train": "images/7Train/7.mat",
+        "k": 105,
+        "accuracy": 0.875
+    }
 ]
